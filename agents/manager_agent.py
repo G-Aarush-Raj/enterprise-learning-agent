@@ -1,3 +1,5 @@
+from services.openai_client import client
+
 def generate_manager_recommendation(ready, risk):
 
     prompt = f"""
