@@ -1,5 +1,5 @@
 import streamlit as st
-
+import matplotlib.pyplot as plt
 from agents.learning_agent import get_learning_path
 from agents.planner_agent import generate_study_plan
 from agents.engagement_agent import get_study_recommendation
@@ -33,6 +33,16 @@ if st.button("Generate Learning Plan"):
     readiness = assess_readiness(score)
 
     insights = get_team_insights()
+
+    labels = ["Ready", "At Risk"]
+    values = [
+        insights["ready_for_exam"],
+        insights["at_risk"]
+    ]
+    fig, ax = plt.subplots()
+    ax.bar(labels, values)
+
+    st.pyplot(fig)
 
     col1, col2, col3 = st.columns(3)
 
