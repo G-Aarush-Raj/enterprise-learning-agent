@@ -23,8 +23,14 @@ if st.button("Generate Learning Plan"):
     )
 
     engagement = get_study_recommendation("EMP-001")
+    score = st.slider(
+        "Practice Score",
+        0,
+        100,
+        70
+    )
 
-    readiness = assess_readiness(67)
+    readiness = assess_readiness(score)
 
     insights = get_team_insights()
 
