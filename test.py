@@ -2,6 +2,7 @@ from agents.learning_agent import get_learning_path
 from agents.planner_agent import generate_study_plan
 from agents.engagement_agent import get_study_recommendation
 from agents.assessment_agent import assess_readiness
+from agents.manager_agent import get_team_insights
 
 learning = get_learning_path("Cloud Engineer")
 
@@ -15,3 +16,5 @@ print(get_study_recommendation("EMP-001"))
 
 print(assess_readiness(67))
 print(assess_readiness(82))
+
+print(get_team_insights())
