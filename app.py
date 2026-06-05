@@ -67,5 +67,6 @@ if st.button("Generate Learning Plan"):
     st.subheader("Readiness Assessment")
     st.json(readiness)
 
-    st.subheader("Manager Insights")
-    st.json(insights)
+    st.subheader("Manager Recommendation")
+
+    st.info(insights["recommendation"])
