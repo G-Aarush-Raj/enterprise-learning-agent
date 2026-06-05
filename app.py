@@ -28,6 +28,17 @@ if st.button("Generate Learning Plan"):
 
     insights = get_team_insights()
 
+    col1, col2, col3 = st.columns(3)
+
+    with col1:
+        st.metric("Total Learners", insights["total_learners"])
+
+    with col2:
+        st.metric("Ready for Exam", insights["ready_for_exam"])
+
+    with col3:
+        st.metric("At Risk", insights["at_risk"])
+
     st.subheader("Learning Path")
     st.json(learning)
 
