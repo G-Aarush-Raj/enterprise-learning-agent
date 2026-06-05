@@ -1,25 +1,42 @@
-import json
+from services.openai_client import client
 
-def get_study_recommendation(employee_id):
+def generate_engagement_plan(
+    meeting_hours,
+    focus_hours,
+    preferred_slot
+):
 
-    with open("data/workload.json", "r") as f:
-        data = json.load(f)
+    prompt = f"""
+    You are an Engagement Agent.
 
-    for employee in data:
+    Employee Profile:
 
-        if employee["employee_id"] == employee_id:
+    Meeting Hours Per Week: {meeting_hours}
+    Focus Hours Per Week: {focus_hours}
+    Preferred Learning Slot: {preferred_slot}
 
-            if employee["meeting_hours"] > 20:
-                recommendation = (
-                    f"Schedule study sessions during "
-                    f"{employee['preferred_slot']} focus hours."
-                )
-            else:
-                recommendation = (
-                    f"Use 1-2 hour study blocks in the "
-                    f"{employee['preferred_slot']}."
-                )
+    Create:
 
-            return recommendation
+    1. Personalized study reminder strategy
+    2. Best study schedule recommendations
+    3. Burnout prevention advice
+    4. Weekly motivation message
 
-    return "No workload data found."
+    Keep the response practical and concise.
+    """
+
+    response = client.chat.completions.create(
+        model="gpt-5",
+        messages=[
+            {
+                "role": "system",
+                "content": "You are a workplace learning coach."
+            },
+            {
+                "role": "user",
+                "content": prompt
+            }
+        ]
+    )
+
+    return response.choices[0].message.content

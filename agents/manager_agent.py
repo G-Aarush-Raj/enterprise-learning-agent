@@ -1,31 +1,29 @@
-import json
+def generate_manager_recommendation(ready, risk):
 
-def get_team_insights():
+    prompt = f"""
+    Team Metrics
 
-    with open("data/learners.json", "r") as f:
-        learners = json.load(f)
+    Ready Learners: {ready}
+    At Risk Learners: {risk}
 
-    total = len(learners)
+    Analyze:
+    1. Team readiness
+    2. Key risks
+    3. Recommended actions
+    """
 
-    ready = sum(
-        1 for learner in learners
-        if learner["practice_score"] >= 80
+    response = client.chat.completions.create(
+        model="gpt-5",
+        messages=[
+            {
+                "role": "system",
+                "content": "You are a workforce learning analyst."
+            },
+            {
+                "role": "user",
+                "content": prompt
+            }
+        ]
     )
 
-    risk = total - ready
-
-    if risk > ready:
-        recommendation = (
-            "Team requires additional preparation before certification exams."
-        )
-    else:
-        recommendation = (
-            "Team is progressing well and appears exam-ready."
-        )
-
-    return {
-        "total_learners": total,
-        "ready_for_exam": ready,
-        "at_risk": risk,
-        "recommendation": recommendation
-    }
+    return response.choices[0].message.content

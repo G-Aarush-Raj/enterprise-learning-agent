@@ -1,15 +1,38 @@
-import json
+from services.openai_client import client
 
-def get_learning_path(role):
-    with open("data/certifications.json", "r") as f:
-        data = json.load(f)
+def generate_learning_path(role, certification, skills):
 
-    for item in data:
-        if item["role"].lower() == role.lower():
-            return {
-                "certification": item["id"],
-                "skills": item["skills"],
-                "recommended_hours": item["recommended_hours"]
+    prompt = f"""
+    You are a Learning Path Curator Agent.
+
+    Role: {role}
+    Certification: {certification}
+
+    Skills:
+    {skills}
+
+    Create:
+
+    1. Recommended learning sequence
+    2. Most important skills to focus on
+    3. Common beginner mistakes
+    4. Suggested preparation timeline
+
+    Format the response professionally.
+    """
+
+    response = client.chat.completions.create(
+        model="gpt-5",
+        messages=[
+            {
+                "role": "system",
+                "content": "You are an enterprise learning specialist."
+            },
+            {
+                "role": "user",
+                "content": prompt
             }
+        ]
+    )
 
-    return None
+    return response.choices[0].message.content

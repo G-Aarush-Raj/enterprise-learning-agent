@@ -1,19 +1,27 @@
-def assess_readiness(score):
+from services.openai_client import client
 
-    if score >= 80:
-        return {
-            "status": "Ready",
-            "recommendation": "Schedule certification exam."
-        }
+def generate_assessment(certification):
 
-    elif score >= 70:
-        return {
-            "status": "Almost Ready",
-            "recommendation": "Practice weak areas."
-        }
+    prompt = f"""
+    Generate 5 certification readiness questions for {certification}.
 
-    else:
-        return {
-            "status": "Needs Improvement",
-            "recommendation": "Continue studying and take more practice tests."
-        }
+    Provide:
+    - Question
+    - Correct answer
+    """
+
+    response = client.chat.completions.create(
+        model="gpt-5",
+        messages=[
+            {
+                "role": "system",
+                "content": "You are a certification assessor."
+            },
+            {
+                "role": "user",
+                "content": prompt
+            }
+        ]
+    )
+
+    return response.choices[0].message.content

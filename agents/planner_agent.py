@@ -1,18 +1,31 @@
-def generate_study_plan(certification, recommended_hours):
-    weeks = 4
+from services.openai_client import client
 
-    hours_per_week = round(recommended_hours / weeks, 1)
+def generate_ai_study_plan(role, certification):
 
-    plan = {
-        "certification": certification,
-        "duration_weeks": weeks,
-        "hours_per_week": hours_per_week,
-        "milestones": [
-            "Learn fundamentals",
-            "Practice labs",
-            "Take mock assessments",
-            "Final revision"
+    prompt = f"""
+    Create a detailed 4-week certification study plan.
+
+    Role: {role}
+    Certification: {certification}
+
+    Include:
+    - Weekly milestones
+    - Daily study recommendations
+    - Practice checkpoints
+    """
+
+    response = client.chat.completions.create(
+        model="gpt-5",
+        messages=[
+            {
+                "role": "system",
+                "content": "You are an enterprise learning planner."
+            },
+            {
+                "role": "user",
+                "content": prompt
+            }
         ]
-    }
+    )
 
-    return plan
+    return response.choices[0].message.content
