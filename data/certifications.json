@@ -1,0 +1,22 @@
+[
+  {
+    "id":"AZ-204",
+    "role":"Cloud Engineer",
+    "skills":[
+      "Azure Functions",
+      "Storage",
+      "API Development"
+    ],
+    "recommended_hours":20
+  },
+  {
+    "id":"AZ-400",
+    "role":"DevOps Engineer",
+    "skills":[
+      "CI/CD",
+      "Monitoring",
+      "GitHub Actions"
+    ],
+    "recommended_hours":25
+  }
+]

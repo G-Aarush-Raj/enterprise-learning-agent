@@ -1,0 +1,14 @@
+[
+  {
+    "learner_id":"L-1001",
+    "role":"Cloud Engineer",
+    "certification":"AZ-204",
+    "practice_score":67
+  },
+  {
+    "learner_id":"L-1002",
+    "role":"DevOps Engineer",
+    "certification":"AZ-400",
+    "practice_score":82
+  }
+]

@@ -1,0 +1,14 @@
+[
+  {
+    "employee_id":"EMP-001",
+    "meeting_hours":22,
+    "focus_hours":10,
+    "preferred_slot":"Morning"
+  },
+  {
+    "employee_id":"EMP-002",
+    "meeting_hours":15,
+    "focus_hours":18,
+    "preferred_slot":"Afternoon"
+  }
+]
