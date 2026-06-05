@@ -13,10 +13,10 @@ def generate_engagement_plan(
     Focus Hours: {focus_hours}
     Preferred Slot: {preferred_slot}
 
-    Generate:
+    Create:
 
-    1. Study reminder strategy
-    2. Weekly learning plan
+    1. Reminder strategy
+    2. Best study timing
     3. Burnout prevention advice
     4. Motivation message
     """

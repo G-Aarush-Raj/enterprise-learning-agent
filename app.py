@@ -208,6 +208,50 @@ if st.button("Generate Learning Journey"):
 
     st.divider()
 
+    report = f"""
+    ENTERPRISE LEARNING REPORT
+
+    Role: {role}
+    Certification: {certification}
+
+    ==============================
+    LEARNING PATH
+    ==============================
+
+    {learning_path}
+
+    ==============================
+    STUDY PLAN
+    ==============================
+
+    {study_plan}
+
+    ==============================
+    ENGAGEMENT PLAN
+    ==============================
+
+    {engagement_plan}
+
+    ==============================
+    ASSESSMENT
+    ==============================
+
+    {assessment}
+
+    ==============================
+    MANAGER INSIGHTS
+    ==============================
+
+    {manager_report}
+    """
+
+    st.download_button(
+        label="📥 Download Full Report",
+        data=report,
+        file_name="enterprise_learning_report.txt",
+        mime="text/plain"
+    )
+
     st.header("✅ Multi-Agent Workflow Complete")
 
     st.success(

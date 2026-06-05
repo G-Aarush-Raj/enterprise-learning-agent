@@ -3,11 +3,13 @@ from services.grok_client import client, MODEL
 def generate_assessment(certification):
 
     prompt = f"""
-    Generate 5 certification readiness questions for {certification}.
+    Generate 5 certification readiness questions.
 
-    Provide:
+    Certification: {certification}
+
+    For each question provide:
     - Question
-    - Correct answer
+    - Correct Answer
     """
 
     response = client.chat.completions.create(
@@ -15,7 +17,7 @@ def generate_assessment(certification):
         messages=[
             {
                 "role": "system",
-                "content": "You are a certification assessor."
+                "content": "You are a certification assessment expert."
             },
             {
                 "role": "user",

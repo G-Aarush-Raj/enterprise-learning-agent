@@ -3,14 +3,14 @@ from services.grok_client import client, MODEL
 def generate_ai_study_plan(role, certification):
 
     prompt = f"""
-    Create a detailed 4-week certification study plan.
+    Create a detailed 4-week study plan.
 
     Role: {role}
     Certification: {certification}
 
     Include:
-    - Weekly milestones
-    - Daily study recommendations
+    - Weekly goals
+    - Study hours
     - Practice checkpoints
     """
 
@@ -19,7 +19,7 @@ def generate_ai_study_plan(role, certification):
         messages=[
             {
                 "role": "system",
-                "content": "You are an enterprise learning planner."
+                "content": "You are an enterprise study planner."
             },
             {
                 "role": "user",

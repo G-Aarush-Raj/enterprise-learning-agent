@@ -12,10 +12,11 @@ def generate_learning_path(role, certification, skills):
     {skills}
 
     Create:
+
     1. Learning sequence
     2. Key focus areas
     3. Common mistakes
-    4. Study timeline
+    4. Suggested timeline
     """
 
     response = client.chat.completions.create(
