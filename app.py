@@ -1,16 +1,21 @@
+import streamlit as st
+
 from agents.learning_agent import get_learning_path
 from agents.planner_agent import generate_study_plan
 from agents.engagement_agent import get_study_recommendation
 from agents.assessment_agent import assess_readiness
 from agents.manager_agent import get_team_insights
 
-print("\n=== Enterprise Learning Agent ===\n")
+st.title("Enterprise Learning Multi-Agent System")
 
-role = input("Enter Role: ")
+role = st.selectbox(
+    "Select Role",
+    ["Cloud Engineer", "DevOps Engineer"]
+)
 
-learning = get_learning_path(role)
+if st.button("Generate Learning Plan"):
 
-if learning:
+    learning = get_learning_path(role)
 
     plan = generate_study_plan(
         learning["certification"],
@@ -23,20 +28,17 @@ if learning:
 
     insights = get_team_insights()
 
-    print("\n--- Learning Path ---")
-    print(learning)
+    st.subheader("Learning Path")
+    st.json(learning)
 
-    print("\n--- Study Plan ---")
-    print(plan)
+    st.subheader("Study Plan")
+    st.json(plan)
 
-    print("\n--- Engagement Recommendation ---")
-    print(engagement)
+    st.subheader("Engagement Recommendation")
+    st.success(engagement)
 
-    print("\n--- Readiness Assessment ---")
-    print(readiness)
+    st.subheader("Readiness Assessment")
+    st.json(readiness)
 
-    print("\n--- Manager Insights ---")
-    print(insights)
-
-else:
-    print("Role not found.")
+    st.subheader("Manager Insights")
+    st.json(insights)
