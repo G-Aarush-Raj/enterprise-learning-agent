@@ -1,4 +1,4 @@
-from services.openai_client import client
+from services.grok_client import client, MODEL
 
 def generate_learning_path(role, certification, skills):
 
@@ -12,17 +12,14 @@ def generate_learning_path(role, certification, skills):
     {skills}
 
     Create:
-
-    1. Recommended learning sequence
-    2. Most important skills to focus on
-    3. Common beginner mistakes
-    4. Suggested preparation timeline
-
-    Format the response professionally.
+    1. Learning sequence
+    2. Key focus areas
+    3. Common mistakes
+    4. Study timeline
     """
 
     response = client.chat.completions.create(
-        model="gpt-5",
+        model=MODEL,
         messages=[
             {
                 "role": "system",

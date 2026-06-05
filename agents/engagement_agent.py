@@ -1,4 +1,4 @@
-from services.openai_client import client
+from services.grok_client import client, MODEL
 
 def generate_engagement_plan(
     meeting_hours,
@@ -7,26 +7,22 @@ def generate_engagement_plan(
 ):
 
     prompt = f"""
-    You are an Engagement Agent.
+    Employee Profile
 
-    Employee Profile:
+    Meeting Hours: {meeting_hours}
+    Focus Hours: {focus_hours}
+    Preferred Slot: {preferred_slot}
 
-    Meeting Hours Per Week: {meeting_hours}
-    Focus Hours Per Week: {focus_hours}
-    Preferred Learning Slot: {preferred_slot}
+    Generate:
 
-    Create:
-
-    1. Personalized study reminder strategy
-    2. Best study schedule recommendations
+    1. Study reminder strategy
+    2. Weekly learning plan
     3. Burnout prevention advice
-    4. Weekly motivation message
-
-    Keep the response practical and concise.
+    4. Motivation message
     """
 
     response = client.chat.completions.create(
-        model="gpt-5",
+        model=MODEL,
         messages=[
             {
                 "role": "system",

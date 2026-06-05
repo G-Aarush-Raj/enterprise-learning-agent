@@ -13,13 +13,21 @@ from agents.manager_agent import (
 
 st.set_page_config(
     page_title="Enterprise Learning Multi-Agent System",
+    page_icon="🎓",
     layout="wide"
 )
 
 st.title("🎓 Enterprise Learning Multi-Agent System")
+st.markdown(
+    "AI-powered certification planning, engagement, assessment, and workforce readiness platform."
+)
+
+# -----------------------------
+# User Inputs
+# -----------------------------
 
 role = st.selectbox(
-    "Select Role",
+    "Select Employee Role",
     ["Cloud Engineer", "DevOps Engineer"]
 )
 
@@ -30,8 +38,13 @@ score = st.slider(
     70
 )
 
-if st.button("Generate AI Learning Plan"):
+# -----------------------------
+# Generate Workflow
+# -----------------------------
 
+if st.button("Generate Learning Journey"):
+
+    # Load Certification Data
     with open("data/certifications.json", "r") as f:
         certifications = json.load(f)
 
@@ -43,47 +56,77 @@ if st.button("Generate AI Learning Plan"):
     certification = cert_data["id"]
     skills = ", ".join(cert_data["skills"])
 
-    with st.spinner("Learning Agent Working..."):
-        learning_path = generate_learning_path(
-            role,
-            certification,
-            skills
-        )
-
-    with st.spinner("Planner Agent Working..."):
-        study_plan = generate_ai_study_plan(
-            role,
-            certification
-        )
-
+    # Load Workload Data
     with open("data/workload.json", "r") as f:
-        workload = json.load(f)
+        workload_data = json.load(f)
 
-    employee = workload[0]
+    employee = workload_data[0]
 
-    with st.spinner("Engagement Agent Working..."):
+    # -----------------------------
+    # Learning Agent
+    # -----------------------------
+
+    with st.spinner("🧠 Learning Agent Creating Learning Path..."):
+
+        learning_path = generate_learning_path(
+            role=role,
+            certification=certification,
+            skills=skills
+        )
+
+    # -----------------------------
+    # Planner Agent
+    # -----------------------------
+
+    with st.spinner("📅 Planner Agent Building Study Plan..."):
+
+        study_plan = generate_ai_study_plan(
+            role=role,
+            certification=certification
+        )
+
+    # -----------------------------
+    # Engagement Agent
+    # -----------------------------
+
+    with st.spinner("🚀 Engagement Agent Personalizing Learning..."):
+
         engagement_plan = generate_engagement_plan(
             employee["meeting_hours"],
             employee["focus_hours"],
             employee["preferred_slot"]
         )
 
-    with st.spinner("Assessment Agent Working..."):
-        assessment_questions = generate_assessment(
+    # -----------------------------
+    # Assessment Agent
+    # -----------------------------
+
+    with st.spinner("📝 Assessment Agent Generating Questions..."):
+
+        assessment = generate_assessment(
             certification
         )
 
+    # -----------------------------
+    # Manager Insights
+    # -----------------------------
+
     insights = get_team_insights()
 
-    with st.spinner("Manager Agent Working..."):
-        manager_recommendation = generate_manager_recommendation(
+    with st.spinner("👨‍💼 Manager Agent Analyzing Team Readiness..."):
+
+        manager_report = generate_manager_recommendation(
             insights["ready_for_exam"],
             insights["at_risk"]
         )
 
+    # -----------------------------
+    # Dashboard Metrics
+    # -----------------------------
+
     st.divider()
 
-    st.subheader("📊 Team Readiness Dashboard")
+    st.header("📊 Team Readiness Dashboard")
 
     col1, col2, col3 = st.columns(3)
 
@@ -105,8 +148,11 @@ if st.button("Generate AI Learning Plan"):
             insights["at_risk"]
         )
 
-    labels = ["Ready", "At Risk"]
+    # -----------------------------
+    # Readiness Chart
+    # -----------------------------
 
+    labels = ["Ready", "At Risk"]
     values = [
         insights["ready_for_exam"],
         insights["at_risk"]
@@ -116,30 +162,54 @@ if st.button("Generate AI Learning Plan"):
 
     ax.bar(labels, values)
 
+    ax.set_title("Team Readiness Overview")
+
     st.pyplot(fig)
 
-    st.divider()
+    # -----------------------------
+    # Learner Readiness
+    # -----------------------------
 
-    st.subheader("🧠 Learning Path Agent")
-    st.write(learning_path)
-
-    st.subheader("📅 Study Planner Agent")
-    st.write(study_plan)
-
-    st.subheader("🚀 Engagement Agent")
-    st.write(engagement_plan)
-
-    st.subheader("📝 Assessment Agent")
-    st.write(assessment_questions)
-
-    st.subheader("👨‍💼 Manager Insights Agent")
-    st.write(manager_recommendation)
-
-    st.subheader("🎯 Readiness Score")
+    st.header("🎯 Learner Readiness")
 
     if score >= 80:
         st.success("Ready for Certification Exam")
+
     elif score >= 70:
-        st.warning("Almost Ready")
+        st.warning("Almost Ready - More Practice Recommended")
+
     else:
-        st.error("Needs More Preparation")
+        st.error("Needs Additional Preparation")
+
+    # -----------------------------
+    # Agent Outputs
+    # -----------------------------
+
+    st.divider()
+
+    with st.expander("🧠 Learning Path Agent", expanded=True):
+        st.write(learning_path)
+
+    with st.expander("📅 Study Planner Agent"):
+        st.write(study_plan)
+
+    with st.expander("🚀 Engagement Agent"):
+        st.write(engagement_plan)
+
+    with st.expander("📝 Assessment Agent"):
+        st.write(assessment)
+
+    with st.expander("👨‍💼 Manager Insights Agent"):
+        st.write(manager_report)
+
+    # -----------------------------
+    # Summary
+    # -----------------------------
+
+    st.divider()
+
+    st.header("✅ Multi-Agent Workflow Complete")
+
+    st.success(
+        "Learning Path → Study Planner → Engagement → Assessment → Manager Insights completed successfully."
+    )

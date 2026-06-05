@@ -1,4 +1,4 @@
-from services.openai_client import client
+from services.grok_client import client, MODEL
 
 def generate_assessment(certification):
 
@@ -11,7 +11,7 @@ def generate_assessment(certification):
     """
 
     response = client.chat.completions.create(
-        model="gpt-5",
+        model=MODEL,
         messages=[
             {
                 "role": "system",
